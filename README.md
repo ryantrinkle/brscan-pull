@@ -14,7 +14,7 @@ Where `FRIENDLY-NAME` is a printer that was configured by a command like `brsane
     brscan4 = {
       enable = true;
       netDevices = {
-        home = {
+        FRIENDLY-NAME = {
           ip = "1.2.3.4";
           model = "MFC-L1234CDW";
         };
