@@ -24,9 +24,9 @@ writeScriptBin "brscan-pull" ''
 
   cd "$TMPDIR"
 
-  ${sane-backends}/bin/scanimage -d "$SANE_DEVICE_NAME" --batch="page%d.png" --format=png ${extraScanimageOptions}
+  ${sane-backends}/bin/scanimage -d "$SANE_DEVICE_NAME" --batch="page.%d.png" --format=png ${extraScanimageOptions}
 
-  ls page*.png | ${tesseract4}/bin/tesseract - out pdf
+  ls page.*.png | sort --field-separator=. -g -k 2 | ${tesseract4}/bin/tesseract - out pdf
 
   ${evince}/bin/evince out.pdf >/dev/null 2>/dev/null &
 
@@ -34,6 +34,6 @@ writeScriptBin "brscan-pull" ''
 
   mkdir -p "$PREFIX/$(dirname "$NAME")"
   mkdir "$PREFIX/$NAME" # Should fail if the name already exists
-  mv -n page*.png "$PREFIX/$NAME/"
+  mv -n page.*.png "$PREFIX/$NAME/"
   mv -n out.pdf "$PREFIX/$NAME.pdf"
 ''
